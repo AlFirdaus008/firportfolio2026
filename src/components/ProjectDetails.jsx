@@ -191,7 +191,7 @@ const ProjectDetails = ({
             </div>
 
             {/* Tech Stack & Link */}
-            <div className="flex flex-wrap items-center justify-between gap-4 mt-6 pt-6 border-t border-white/10">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mt-6 pt-6 border-t border-white/10">
               <div className="flex flex-wrap gap-3">
                 {tags.map((tag) => (
                   <div key={tag.id} className="relative group">
@@ -212,7 +212,7 @@ const ProjectDetails = ({
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors font-medium text-white"
+                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-lg bg-white/10 hover:bg-white/20 transition-colors font-medium text-white shadow-lg border border-white/5"
                 >
                   View Project
                   <img src="assets/arrow-up.svg" className="size-4 rotate-45" />

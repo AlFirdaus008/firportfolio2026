@@ -1,6 +1,9 @@
 import { OrbitingCircles } from "./OrbitingCircles";
+import { useMediaQuery } from "react-responsive";
 
 export function Frameworks() {
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+
   const innerSkills = [
     "python",
     "sql",
@@ -34,9 +37,9 @@ export function Frameworks() {
     <div className="relative flex h-60 w-full flex-col items-center justify-center">
       <OrbitingCircles
         className="border-none bg-transparent"
-        radius={90}
+        radius={isMobile ? 50 : 90}
         duration={20}
-        iconSize={25}
+        iconSize={isMobile ? 20 : 25}
       >
         {innerSkills.map((skill, index) => (
           <Icon key={index} src={`assets/logos/${skill}.svg`} />
@@ -44,9 +47,9 @@ export function Frameworks() {
       </OrbitingCircles>
       <OrbitingCircles
         className="border-none bg-transparent"
-        radius={190}
+        radius={isMobile ? 100 : 190}
         duration={35}
-        iconSize={50}
+        iconSize={isMobile ? 30 : 50}
         reverse
       >
         {outerSkills.map((skill, index) => (
