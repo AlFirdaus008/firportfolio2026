@@ -56,11 +56,13 @@ const About = () => {
                 style={{ rotate: "90deg", bottom: "30%", left: "70%" }}
                 text="Design Patterns"
                 containerRef={grid2Container}
+                className="hidden md:flex"
               />
               <Card
                 style={{ rotate: "-45deg", top: "55%", left: "0%" }}
                 text="Design Principles"
                 containerRef={grid2Container}
+                className="hidden md:flex"
               />
               <Card
                 style={{ rotate: "20deg", top: "10%", left: "38%" }}

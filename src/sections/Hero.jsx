@@ -10,7 +10,9 @@ import Loader from "../components/Loader";
 import { Particles } from "../components/Particles";
 
 const Hero = () => {
-  const isMobile = useMediaQuery({ maxWidth: 853 });
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1024 });
+
   return (
     <section id="home" className="flex items-start justify-center min-h-screen overflow-hidden md:items-start md:justify-start c-space">
       <Particles
@@ -30,8 +32,8 @@ const Hero = () => {
           <Suspense fallback={<Loader />}>
             <Float>
               <Astronaut
-                scale={isMobile && 0.23}
-                position={isMobile && [0, -1.5, 0]}
+                scale={isMobile ? 0.18 : isTablet ? 0.25 : 0.3}
+                position={isMobile ? [0, -1.2, 0] : isTablet ? [1, -1.5, 0] : [2, -2, 0]}
               />
             </Float>
             <Rig />

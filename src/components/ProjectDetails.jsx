@@ -74,7 +74,7 @@ const ProjectDetails = ({
       )}
 
       <motion.div
-        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto border shadow-2xl rounded-2xl bg-[#161a31] border-white/10 scrollbar-hide cursor-default"
+        className="relative w-full max-w-4xl max-h-[90dvh] overflow-y-auto border shadow-2xl rounded-2xl bg-[#161a31] border-white/10 scrollbar-hide cursor-default"
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
