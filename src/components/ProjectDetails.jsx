@@ -9,6 +9,7 @@ const ProjectDetails = ({
   gallery,
   tags,
   href,
+  category,
   closeModal,
   onNext,
   onPrev,
@@ -214,7 +215,7 @@ const ProjectDetails = ({
                   rel="noreferrer"
                   className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-lg bg-white/10 hover:bg-white/20 transition-colors font-medium text-white shadow-lg border border-white/5"
                 >
-                  View Project
+                  {category === "technical" ? "View GitHub" : "View Project"}
                   <img src="assets/arrow-up.svg" className="size-4 rotate-45" />
                 </a>
               )}

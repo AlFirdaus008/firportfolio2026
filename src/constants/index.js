@@ -10,7 +10,7 @@ export const myProjects = [
       "Designed an intuitive dashboard that visualizes real-time stock levels, low-stock alerts, and expiration tracking to prevent financial loss.",
       "Integrated persistent data storage using JSON file handling, ensuring reliable save/load functionality for business continuity.",
     ],
-    href: "",
+    href: "https://github.com/AlFirdaus008/foodstock",
     logo: "",
     image: "/assets/projects/technical/foodstock.jpg",
     tags: [
@@ -48,7 +48,7 @@ export const myProjects = [
       "Developed a Digital Notary feature for PDF files, utilizing Server-Side Signing with SECP256K1 and SHA-256 hashing to guarantee file integrity and non-repudiation.",
       "Secured API endpoints using JWT (JSON Web Token) authentication based on OAuth2 standards and managed dependencies efficiently using the modern uv package manager.",
     ],
-    href: "",
+    href: "https://github.com/AlFirdaus008/DataSecurityIntegratyProject-CryptographyAPIServiceImplementation",
     logo: "",
     image: "/assets/projects/technical/punkrecords.jpg",
     tags: [
@@ -76,7 +76,7 @@ export const myProjects = [
       "Integrated a data-driven design approach by utilizing K-Means clustering analysis to segment user satisfaction and optimize UI placement.",
       "Developed a comprehensive design system covering Login, Home, Orders, and Deals pages to ensure visual consistency and responsiveness.",
     ],
-    href: "",
+    href: "https://github.com/alfirdausn/travel-uiux",
     logo: "",
     image: "/assets/projects/technical/travelvg.jpg",
     tags: [
@@ -99,7 +99,7 @@ export const myProjects = [
       "Conducted in-depth Exploratory Data Analysis (EDA) using correlation heatmaps to reveal that historical poverty trends are the strongest predictors of current economic conditions.",
       "Addressed complex data quality issues such as handling missing monthly values and resolving inconsistencies in provincial metadata across varying file types.",
     ],
-    href: "",
+    href: "https://github.com/AlFirdaus008/DataWranglingProject-EducationPovertyUnemployment",
     logo: "",
     image: "/assets/projects/technical/datawranlingsosioeco.jpg",
     tags: [
@@ -148,7 +148,7 @@ export const myProjects = [
       "Achieved a high Recall rate of 82% using the Naive Bayes model, effectively minimizing false negatives (undetected at-risk customers).",
       "Conducted Feature Importance Analysis to identify key churn drivers, revealing that 'Month-to-Month Contracts' and 'Fiber Optic Service' were the primary risk factors.",
     ],
-    href: "",
+    href: "https://github.com/AlFirdaus008/ArtificialIntelligenceProject-TelecommunicationCustomerChurnAnalysis",
     logo: "",
     image: "/assets/projects/technical/aichurnprediction.jpg",
     tags: [
@@ -188,7 +188,7 @@ export const myProjects = [
       "Implemented Facebook Prophet for time-series forecasting to predict future sentiment trends, identifying specific weekly seasonality patterns and long-term stability.",
       "Engineered an end-to-end data pipeline including scraping via YouTube Data API v3, text preprocessing (cleaning, stemming), and advanced visualization (PCA, WordClouds) to interpret complex public signals",
     ],
-    href: "",
+    href: "https://github.com/AlFirdaus008/PublicOpinion-SentimentAnalysis-IndonesianMinisterOfFinance",
     logo: "",
     image: "/assets/projects/technical/sentimentanalysiscomentsyoutube.jpg",
     tags: [
@@ -227,7 +227,7 @@ export const myProjects = [
       "Developed a machine learning pipeline using Scikit-Learn to classify vehicle types based on their spectral acoustic signatures.",
       "Analyzed signal characteristics across time and frequency domains to identify unique auditory fingerprints for heavy vs. light vehicles.",
     ],
-    href: "",
+    href: "https://github.com/AlFirdaus008/SignalDigitalProcessing-AdaptiveFilterVehicleClassification",
     logo: "",
     image: "/assets/projects/technical/dpsvehicleclassification.jpg",
     tags: [
