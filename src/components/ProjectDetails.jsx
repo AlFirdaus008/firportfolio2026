@@ -9,6 +9,7 @@ const ProjectDetails = ({
   gallery,
   tags,
   href,
+  links,
   category,
   closeModal,
   onNext,
@@ -208,17 +209,42 @@ const ProjectDetails = ({
                 ))}
               </div>
 
-              {href && (
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-lg bg-white/10 hover:bg-white/20 transition-colors font-medium text-white shadow-lg border border-white/5"
-                >
-                  {category === "technical" ? "View GitHub" : "View Project"}
-                  <img src="assets/arrow-up.svg" className="size-4 rotate-45" />
-                </a>
-              )}
+              <div className="flex flex-wrap gap-3 w-full sm:w-auto">
+                {links ? (
+                  links.map((link, index) => (
+                    <a
+                      key={index}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center gap-2 flex-1 sm:flex-none px-6 py-3 rounded-lg bg-white/10 hover:bg-white/20 transition-colors font-medium text-white shadow-lg border border-white/5"
+                    >
+                      {link.label}
+                      <img
+                        src="assets/arrow-up.svg"
+                        className="size-4 rotate-45"
+                      />
+                    </a>
+                  ))
+                ) : (
+                  href && (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-lg bg-white/10 hover:bg-white/20 transition-colors font-medium text-white shadow-lg border border-white/5"
+                    >
+                      {category === "technical"
+                        ? "View GitHub"
+                        : "View Project"}
+                      <img
+                        src="assets/arrow-up.svg"
+                        className="size-4 rotate-45"
+                      />
+                    </a>
+                  )
+                )}
+              </div>
             </div>
           </div>
 

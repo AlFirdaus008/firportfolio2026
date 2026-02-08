@@ -76,7 +76,16 @@ export const myProjects = [
       "Integrated a data-driven design approach by utilizing K-Means clustering analysis to segment user satisfaction and optimize UI placement.",
       "Developed a comprehensive design system covering Login, Home, Orders, and Deals pages to ensure visual consistency and responsiveness.",
     ],
-    href: "https://github.com/alfirdausn/travel-uiux",
+    links: [
+      {
+        label: "View Video",
+        href: "/assets/projects/technical/recordtravelvg.mp4",
+      },
+      {
+        label: "View Poster",
+        href: "/assets/projects/technical/postertravelvg.png",
+      },
+    ],
     logo: "",
     image: "/assets/projects/technical/travelvg.jpg",
     tags: [
@@ -431,7 +440,7 @@ export const myProjects = [
     href: "https://youtu.be/_IywiWnLyGA",
     logo: "",
     image: "/assets/projects/creative/picture/wedding.png",
-    video: "https://youtu.be/_IywiWnLyGA",
+    video: "/assets/projects/creative/picture/wedding.png",
     gallery: [],
     tags: [
       {
