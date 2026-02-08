@@ -55,6 +55,27 @@ const HeroText = () => {
           >
             Where Analytical Logic meets Creative Design.
           </motion.p>
+          <motion.div
+            variants={variants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 2.1 }}
+            className="mt-10"
+          >
+            <a
+              href="/abdullahalfirdausnuzulaportfolio.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-neutral-200 transition-all group"
+            >
+              View Slide Portfolio
+              <img
+                src="/assets/arrow-up.svg"
+                alt="arrow"
+                className="w-4 h-4 rotate-45 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+              />
+            </a>
+          </motion.div>
         </div>
       </div>
       {/* Mobile View */}
@@ -68,9 +89,9 @@ const HeroText = () => {
         >
           Hi,I'm Al-Firdaus
         </motion.p>
-        <div>
+        <div className="flex flex-col items-center text-center">
           <motion.p
-            className="flex flex-col items-center text-center text-4xl font-medium text-neutral-300"
+            className="text-4xl font-medium text-neutral-300"
             variants={variants}
             initial="hidden"
             animate="visible"
@@ -90,7 +111,7 @@ const HeroText = () => {
             />
           </motion.div>
           <motion.p
-            className="text-xl sm:text-2xl font-black text-neutral300"
+            className="text-xl sm:text-2xl font-black text-neutral300 mt-2"
             variants={variants}
             initial="hidden"
             animate="visible"
@@ -98,6 +119,27 @@ const HeroText = () => {
           >
             Where Analytical Logic meets Creative Design.
           </motion.p>
+          <motion.div
+            variants={variants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 2.1 }}
+            className="mt-8"
+          >
+            <a
+              href="/abdullahalfirdausnuzulaportfolio.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-bold text-sm"
+            >
+              View Slide Portfolio
+              <img
+                src="/assets/arrow-up.svg"
+                alt="arrow"
+                className="w-3 h-3 rotate-45"
+              />
+            </a>
+          </motion.div>
         </div>
       </div>
     </div>

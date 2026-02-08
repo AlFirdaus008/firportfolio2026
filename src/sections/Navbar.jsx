@@ -54,7 +54,7 @@ function Navigation({ setCategory, isMobile, activeSection }) {
         </li>
       ))}
       
-      <li className="nav-li">
+      <li className="nav-li flex items-center gap-2">
         <a
           href="/abdullahalfirdausnuzularesume.pdf"
           target="_blank"
@@ -62,6 +62,15 @@ function Navigation({ setCategory, isMobile, activeSection }) {
           className="nav-link font-bold text-gray-300 hover:text-white cursor-pointer"
         >
           Resume
+        </a>
+        <span className="text-white/20">|</span>
+        <a
+          href="/abdullahalfirdausnuzulaportfolio.pdf"
+          target="_blank"
+          rel="noreferrer"
+          className="nav-link font-bold text-gray-300 hover:text-white cursor-pointer whitespace-nowrap"
+        >
+          Portfolio PDF
         </a>
       </li>
     </ul>
