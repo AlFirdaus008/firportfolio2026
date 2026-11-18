@@ -1,14 +1,20 @@
-import { motion } from "motion/react";
+import { motion as Motion } from "motion/react";
+import { useEffect, useRef } from "react";
+import { getProjectDestination } from "../utils/projectLinks";
+import ShareProjectLink from "./ShareProjectLink";
 
 const ProjectDetails = ({
   title,
   description,
   subDescription,
+  caseStudy,
   image,
   video,
   gallery,
+  galleryTitle = "Project Gallery",
   tags,
   href,
+  dashboardUrl,
   links,
   category,
   closeModal,
@@ -16,7 +22,48 @@ const ProjectDetails = ({
   onPrev,
   hasNext,
   hasPrev,
+  projectPath,
 }) => {
+  const modalRef = useRef(null);
+  const panelRef = useRef(null);
+  useEffect(() => {
+    if (panelRef.current) panelRef.current.scrollTop = 0;
+  }, [projectPath]);
+  useEffect(() => {
+    const previousFocus = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    modalRef.current?.focus();
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") closeModal();
+      if (event.key !== "Tab") return;
+      const controls = [...(modalRef.current?.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), iframe, video[controls], [tabindex="0"]') || [])]
+        .filter((control) => control.getClientRects().length > 0);
+      if (!controls?.length) return;
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === modalRef.current)) {
+        event.preventDefault(); last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault(); first.focus();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+      previousFocus?.focus();
+    };
+  }, [closeModal]);
+  const destination = getProjectDestination({ dashboardUrl, href, links });
+  const coverImage = (
+    <img
+      src={image}
+      alt={title}
+      className="block w-full h-auto max-h-[70dvh] object-contain"
+    />
+  );
+
   const isVideo = (url) => {
     return url?.match(/\.(mp4|webm|ogg)$/i);
   };
@@ -36,7 +83,12 @@ const ProjectDetails = ({
   };
 
   return (
-    <motion.div
+    <Motion.div
+      ref={modalRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="project-detail-title"
+      tabIndex={-1}
       className="fixed inset-0 z-50 flex items-center justify-center w-full h-full backdrop-blur-sm bg-black/70 p-4 cursor-pointer"
       onClick={closeModal}
       initial={{ opacity: 0 }}
@@ -46,6 +98,8 @@ const ProjectDetails = ({
       {/* Previous Button */}
       {hasPrev && (
         <button
+          type="button"
+          aria-label="Previous project"
           onClick={(e) => {
             e.stopPropagation();
             onPrev();
@@ -62,6 +116,8 @@ const ProjectDetails = ({
       {/* Next Button */}
       {hasNext && (
         <button
+          type="button"
+          aria-label="Next project"
           onClick={(e) => {
             e.stopPropagation();
             onNext();
@@ -75,7 +131,8 @@ const ProjectDetails = ({
         </button>
       )}
 
-      <motion.div
+      <Motion.div
+        ref={panelRef}
         className="relative w-full max-w-4xl max-h-[90dvh] overflow-y-auto border shadow-2xl rounded-2xl bg-[#161a31] border-white/10 scrollbar-hide cursor-default"
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -84,8 +141,10 @@ const ProjectDetails = ({
         onClick={(e) => e.stopPropagation()}
       >
         <button
+          type="button"
+          aria-label="Close project details"
           onClick={closeModal}
-          className="sticky top-4 right-4 z-50 float-right p-2 ml-auto rounded-full bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-md transition-all duration-200 shadow-lg group"
+          className="sticky top-4 right-4 z-50 float-right min-h-11 min-w-11 p-2 ml-auto rounded-full bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-md transition-all duration-200 shadow-lg group"
         >
           <img
             src="assets/close.svg"
@@ -94,31 +153,37 @@ const ProjectDetails = ({
         </button>
 
         {/* Mobile Navigation (Visible only on small screens) */}
-        <div className="flex justify-between items-center px-4 py-2 sm:hidden absolute top-1/2 w-full -translate-y-1/2 pointer-events-none">
+        <div className="clear-both flex justify-between items-center gap-3 px-4 py-3 sm:hidden">
           {hasPrev ? (
             <button
+              type="button"
+              aria-label="Previous project"
               onClick={(e) => {
                 e.stopPropagation();
                 onPrev();
               }}
-              className="p-2 rounded-full bg-black/50 border border-white/10 pointer-events-auto"
+              className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-white/10 px-3 text-sm"
             >
               <img
                 src="assets/arrow-right.svg"
                 className="w-5 h-5 brightness-0 invert rotate-180"
               />
+              Previous
             </button>
           ) : (
             <div />
           )}
           {hasNext ? (
             <button
+              type="button"
+              aria-label="Next project"
               onClick={(e) => {
                 e.stopPropagation();
                 onNext();
               }}
-              className="p-2 rounded-full bg-black/50 border border-white/10 pointer-events-auto"
+              className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-white/10 px-3 text-sm"
             >
+              Next
               <img
                 src="assets/arrow-right.svg"
                 className="w-5 h-5 brightness-0 invert"
@@ -130,7 +195,7 @@ const ProjectDetails = ({
         </div>
 
         {/* Hero Media (YouTube / Video / Instagram / Image) */}
-        <div className="w-full bg-black aspect-video flex items-center justify-center overflow-hidden rounded-t-2xl">
+        <div className={`w-full bg-black flex items-center justify-center overflow-hidden rounded-t-2xl ${video ? "aspect-video" : ""}`}>
           {video ? (
             getYouTubeEmbedUrl(video) ? (
               <iframe
@@ -164,25 +229,40 @@ const ProjectDetails = ({
                 className="w-full h-full object-contain"
               />
             )
-          ) : (
-            <img
-              src={image}
-              alt={title}
-              className="w-full h-full object-cover"
-            />
-          )}
+          ) : destination ? (
+            <a
+              href={destination.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${destination.label}: ${title} (opens in a new tab)`}
+              title={destination.label}
+              className="group relative block w-full focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-aqua"
+            >
+              {coverImage}
+              <span className="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-lg border border-white/15 bg-midnight/90 px-3 py-2 text-xs text-white backdrop-blur-sm sm:bottom-4 sm:right-4 sm:text-sm">
+                {destination.label}
+                <img src="/assets/arrow-up.svg" alt="" className="size-3 rotate-45" />
+              </span>
+            </a>
+          ) : coverImage}
         </div>
 
         <div className="p-6 md:p-8">
           <div className="flex flex-col gap-4">
-            <h5 className="text-3xl font-bold text-white">{title}</h5>
+            <h2 id="project-detail-title" className="break-words text-2xl font-bold text-white sm:text-3xl">{title}</h2>
+            {projectPath && <ShareProjectLink key={projectPath} projectPath={projectPath} />}
 
             <p className="font-medium text-neutral-300 leading-relaxed text-lg">
               {description}
             </p>
 
-            <div className="space-y-3">
-              {subDescription.map((subDesc, index) => (
+            <div className="space-y-6">
+              {caseStudy ? caseStudy.map((section) => (
+                <section key={section.heading}>
+                  <h3 className="mb-2 text-base font-semibold text-white">{section.heading}</h3>
+                  <p className="text-base leading-relaxed text-neutral-400">{section.text}</p>
+                </section>
+              )) : subDescription.map((subDesc, index) => (
                 <p
                   key={index}
                   className="text-neutral-400 text-base leading-relaxed"
@@ -252,7 +332,7 @@ const ProjectDetails = ({
           {gallery && gallery.length > 0 && (
             <div className="mt-10 pt-8 border-t border-white/10">
               <h6 className="text-xl font-bold text-white mb-6">
-                Project Gallery
+                {galleryTitle}
               </h6>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {gallery.map((item, index) => (
@@ -291,8 +371,9 @@ const ProjectDetails = ({
                     ) : (
                       <img
                         src={item}
-                        alt={`Gallery ${index + 1}`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        alt={`${galleryTitle}: ${title}, photo ${index + 1}`}
+                        loading="lazy"
+                        className="w-full h-full object-contain"
                       />
                     )}
                   </div>
@@ -301,8 +382,8 @@ const ProjectDetails = ({
             </div>
           )}
         </div>
-      </motion.div>
-    </motion.div>
+      </Motion.div>
+    </Motion.div>
   );
 };
 

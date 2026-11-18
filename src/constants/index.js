@@ -1,4 +1,10 @@
+import { newTechnicalProjects, newExperiences } from "./portfolioUpdates";
+import { projectStories } from "./projectStories";
+import { newCreativeProjects, creativeStories } from "./creativeUpdates";
+
 export const myProjects = [
+  ...newTechnicalProjects,
+  ...newCreativeProjects,
   {
     id: 1,
     title: "Data Structure and Algorithm Visualizer",
@@ -318,7 +324,7 @@ export const myProjects = [
     logo: "",
     image: "/assets/projects/creative/picture/50tahunyamaha.png",
     video: "https://youtu.be/y-XDOVigUl8",
-    gallery: ["https://youtu.be/k90O8Q8mPVw", "https://youtu.be/bN3o0gsta0g"],
+    gallery: ["https://youtu.be/k90O8Q8mPVw"],
     tags: [
       {
         id: 1,
@@ -440,7 +446,7 @@ export const myProjects = [
     href: "https://youtu.be/_IywiWnLyGA",
     logo: "",
     image: "/assets/projects/creative/picture/wedding.png",
-    video: "/assets/projects/creative/picture/wedding.png",
+    video: "https://youtu.be/_IywiWnLyGA",
     gallery: [],
     tags: [
       {
@@ -502,7 +508,9 @@ export const myProjects = [
     ],
     category: "creative",
   },
-];
+].map((project) => project.category === "technical"
+  ? { ...project, ...projectStories[project.id] }
+  : { ...project, ...creativeStories[project.id] });
 
 export const mySocials = [
   {
@@ -528,16 +536,15 @@ export const mySocials = [
 ];
 
 export const experiences = [
+  ...newExperiences,
   {
     title: "Video Editor",
     job: "Freelance at Satu Visual",
     date: "2023 - 2025",
     contents: [
-      "Produced and edited high-engagement video content for prominent YouTube creators 'Dwikids Official' and 'B Blek' at Satu Visual, optimizing content for digital audiences.",
-      "Spearheaded the end-to-end post-production for a 25-episode comedy sequel, managing narrative flow, comedic timing, and visual consistency throughout the series.",
-      "Collaborated closely with content creators to translate scripts into visually compelling narratives, ensuring high retention rates and audience engagement.",
-      "Executed advanced video editing techniques including color grading, sound design, and motion graphics to enhance the production value of daily vlog and comedy content.",
-      "Managed project timelines efficiently to deliver 25 consecutive episodes on schedule while maintaining high creative standards.",
+      "Edited YouTube content for Dwikids Official and B Blek at Satu Visual.",
+      "Handled post-production for a 25-episode comedy series, including pacing, continuity, color, and sound.",
+      "Worked with the creators on revisions and episode delivery schedules.",
     ],
     category: "creative",
   },
@@ -546,20 +553,18 @@ export const experiences = [
     job: "Cinematic Yearbook Video for High School Class of 2024",
     date: "2024",
     contents: [
-      "Directed and conceptualized the cinematic yearbook video for SMA Negeri 7 Malang Class of 2024, effectively capturing the nostalgic essence of high school life.",
-      "Led the entire production crew and directed hundreds of students during large-scale shoots, ensuring organized workflow and dynamic visual storytelling.",
-      "Developed the creative storyboard and visual tone, translating abstract themes into a cohesive and emotionally resonant narrative.",
-      "Oversaw the end-to-end post-production process, including editing, color grading, and sound design, to deliver a high-quality cinematic final product.",
+      "Directed the yearbook film for SMA Negeri 7 Malang's class of 2024, from concept and storyboard to the finished edit.",
+      "Coordinated the crew and student cast during filming, then oversaw editing, color grading, and sound.",
     ],
     category: "creative",
   },
   {
     title: "Video Editor",
     job: "Freelance at MyFundAction of Malaysia",
-    date: "2025 - Present",
+    date: "Sep 2025 - Present",
     contents: [
-      "Produced and edited engaging short-form content and long-form promotional videos for MyFundAction Malaysia, tailoring visual narratives to support diverse campaign initiatives..",
-      "Collaborated with the creative team to deliver high-quality video assets that aligned with the organization's branding and specific marketing requirements.",
+      "Edited short-form content and longer promotional videos for MyFundAction Malaysia's campaigns.",
+      "Worked with the creative team on edits and revisions to match each campaign brief.",
     ],
     category: "creative",
   },
@@ -568,8 +573,8 @@ export const experiences = [
     job: "Self-Employed",
     date: "2025 - Present",
     contents: [
-      "Developed comprehensive data science projects using Python, Pandas, and Scikit-Learn to showcase expertise in data wrangling, predictive modeling, and visualization.",
-      "Continuously enhancing analytical capabilities and expanding expertise in machine learning algorithms, deep learning, and digital signal processing",
+      "Built Python projects covering data preparation, predictive models, and visualization with Pandas and Scikit-Learn.",
+      "Explored machine learning, deep learning, and audio signal processing through project work.",
     ],
     category: "technical",
   },

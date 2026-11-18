@@ -5,9 +5,8 @@ const SEO = () => {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Al-Firdaus Nuzula",
-    "url": "https://alfirdaus.dev", // Ganti dengan domain asli nanti
-    "image": "https://alfirdaus.dev/assets/coding-pov.png",
-    "jobTitle": ["Data Scientist", "Video Editor", "Creative Director"],
+    "url": "https://alfirdaus.vercel.app",
+    "jobTitle": ["Data Science & AI Researcher", "Creative Professional"],
     "worksFor": {
       "@type": "Organization",
       "name": "Freelance"
@@ -16,9 +15,9 @@ const SEO = () => {
       "https://www.linkedin.com/in/alfirdausn/",
       "https://www.instagram.com/firdausanzl/",
       "https://www.youtube.com/@alfirdausn",
-      "https://github.com/alfirdausn" // Asumsi jika ada
+      "https://github.com/AlFirdaus008"
     ],
-    "description": "Al-Firdaus Nuzula is a Data Scientist and Professional Video Editor bridging the gap between technical data insights and creative visual storytelling."
+    "description": "Al-Firdaus Nuzula is a Data Science student in the International Class at State University of Surabaya, class of 2024. His work includes AI research, data analysis, and creative production."
   };
 
   return (

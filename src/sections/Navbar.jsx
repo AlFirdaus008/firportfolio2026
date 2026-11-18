@@ -1,192 +1,101 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-function Navigation({ setCategory, isMobile, activeSection }) {
-  const handleWorkClick = (cat) => {
-    if (setCategory) {
-      setCategory(cat);
-    }
-    const section = document.querySelector("#work");
-    if (section) section.scrollIntoView({ behavior: "smooth" });
-  };
+const sections = [
+  { id: "about", label: "About" },
+  { id: "work", label: "Projects" },
+  { id: "experience", label: "Experience" },
+  { id: "achievements", label: "Achievements" },
+  { id: "certifications", label: "Certifications" },
+  { id: "contact", label: "Contact" },
+];
 
-  const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Work", href: "#work", isDropdown: true },
-    { name: "Contact", href: "#contact" },
-  ];
+const documents = [
+  { label: "Resume", href: "/abdullahalfirdausnuzularesume.pdf" },
+  { label: "Portfolio PDF", href: "/abdullahalfirdausnuzulaportfolio.pdf" },
+];
 
-  return (
-    <ul className="nav-ul">
-      {navLinks.map((link) => (
-        <li key={link.name} className="nav-li group relative">
-          <a
-            className={`nav-link transition-colors duration-300 ${
-              activeSection === link.name.toLowerCase()
-                ? "text-white font-bold after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-white after:rounded-full"
-                : "text-neutral-400 hover:text-white"
-            }`}
-            href={link.href}
-            onClick={link.isDropdown && isMobile ? (e) => e.preventDefault() : undefined}
-          >
-            {link.name}
-          </a>
-          
-          {link.isDropdown && !isMobile && (
-            <div className="absolute left-1/2 -translate-x-1/2 pt-4 hidden group-hover:block transition-all duration-300">
-              <div className="bg-black/90 backdrop-blur-xl border border-white/10 rounded-xl p-2 flex flex-col gap-1 shadow-[0_0_20px_rgba(0,0,0,0.5)] min-w-40">
-                <button
-                  onClick={() => handleWorkClick("technical")}
-                  className="text-left text-sm font-medium text-gray-300 hover:text-cyan-400 hover:bg-white/5 px-4 py-3 rounded-lg transition-all duration-200"
-                >
-                  Data Science
-                </button>
-                <button
-                  onClick={() => handleWorkClick("creative")}
-                  className="text-left text-sm font-medium text-gray-300 hover:text-purple-400 hover:bg-white/5 px-4 py-3 rounded-lg transition-all duration-200"
-                >
-                  Creative
-                </button>
-              </div>
-            </div>
-          )}
-        </li>
-      ))}
-      
-      <li className="nav-li flex items-center gap-2">
-        <a
-          href="/abdullahalfirdausnuzularesume.pdf"
-          target="_blank"
-          rel="noreferrer"
-          className="nav-link font-bold text-gray-300 hover:text-white cursor-pointer"
-        >
-          Resume
-        </a>
-        <span className="text-white/20">|</span>
-        <a
-          href="/abdullahalfirdausnuzulaportfolio.pdf"
-          target="_blank"
-          rel="noreferrer"
-          className="nav-link font-bold text-gray-300 hover:text-white cursor-pointer whitespace-nowrap"
-        >
-          Portfolio PDF
-        </a>
-      </li>
-    </ul>
-  );
-}
-
-const Navbar = ({ setCategory }) => {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const toggleRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Scroll to Top Button Logic
-      if (window.scrollY > 500) {
-        setShowScrollTop(true);
-      } else {
-        setShowScrollTop(false);
-      }
-
-      // Active Section Logic
-      const sections = ["home", "about", "work", "contact"];
-      const scrollPosition = window.scrollY + 200; // Offset for better detection
-
+    const update = () => {
+      setShowScrollTop(window.scrollY > 500);
+      let current = "home";
       for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const offsetHeight = element.offsetHeight;
-          
-          if (
-            scrollPosition >= offsetTop &&
-            scrollPosition < offsetTop + offsetHeight
-          ) {
-            setActiveSection(section);
-          }
-        }
+        const element = document.getElementById(section.id);
+        if (element && element.getBoundingClientRect().top <= 160) current = section.id;
+      }
+      setActiveSection(current);
+    };
+    const onEscape = (event) => {
+      if (event.key === "Escape" && isOpen) {
+        setIsOpen(false);
+        toggleRef.current?.focus();
       }
     };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    window.addEventListener("keydown", onEscape);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      window.removeEventListener("keydown", onEscape);
+    };
+  }, [isOpen]);
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  const navLinks = sections.map(({ id, label }) => (
+    <li key={id}>
+      <a href={`#${id}`} onClick={() => setIsOpen(false)} aria-current={activeSection === id ? "location" : undefined} className={`block rounded-sm py-2 text-lg md:text-base transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-aqua ${activeSection === id ? "font-bold text-white" : "text-neutral-400 hover:text-white"}`}>
+        {label}
+      </a>
+    </li>
+  ));
 
   return (
     <>
-      <div className="fixed inset-x-0 z-40 w-full backdrop-blur-lg bg-primary/40 border-b border-white/5">
-        <div className="mx-auto c-space max-w-7xl">
-          <div className="flex items-center justify-between py-4 sm:py-0 h-16 sm:h-auto">
-            <a
-              href="/"
-              className="text-2xl font-bold transition-colors text-white hover:text-gray-300"
-            >
-              Al-Firdaus
-            </a>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="flex cursor-pointer text-white hover:text-gray-300 focus:outline-none sm:hidden"
-            >
-              <img
-                src={isOpen ? "./assets/close.svg" : "./assets/menu.svg"}
-                className="w-6 h-6"
-                alt="toggle"
-              />
-            </button>
-            <nav className="hidden sm:flex">
-              <Navigation setCategory={setCategory} isMobile={false} activeSection={activeSection} />
-            </nav>
-          </div>
+      <header className="fixed inset-x-0 z-40 w-full border-b border-white/5 bg-primary/60 backdrop-blur-lg">
+        <div className="c-space mx-auto flex h-16 max-w-7xl items-center justify-between gap-6">
+          <a href="#home" onClick={() => setIsOpen(false)} className="shrink-0 rounded-sm text-2xl font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-aqua">Al-Firdaus</a>
+          <nav aria-label="Main navigation" className="hidden xl:block">
+            <ul className="flex items-center gap-5">
+              {navLinks}
+              <li className="relative">
+                <details className="group">
+                  <summary className="cursor-pointer rounded-sm py-2 text-lg md:text-base font-bold text-neutral-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-aqua">Documents</summary>
+                  <ul className="absolute right-0 mt-3 min-w-44 space-y-1 rounded-xl border border-white/10 bg-midnight p-2 shadow-xl">
+                    {documents.map((doc) => <li key={doc.label}><a href={doc.href} target="_blank" rel="noreferrer" className="block rounded-lg px-4 py-3 text-lg md:text-base font-bold text-neutral-300 hover:bg-white/5 hover:text-white focus-visible:outline-2 focus-visible:outline-aqua">{doc.label}<span className="sr-only"> (opens in a new tab)</span></a></li>)}
+                  </ul>
+                </details>
+              </li>
+            </ul>
+          </nav>
+          <button ref={toggleRef} type="button" aria-label={isOpen ? "Close navigation" : "Open navigation"} aria-expanded={isOpen} aria-controls="mobile-navigation" onClick={() => setIsOpen(!isOpen)} className="cursor-pointer rounded-lg p-2 text-white focus-visible:outline-2 focus-visible:outline-aqua xl:hidden">
+            <img src={isOpen ? "/assets/close.svg" : "/assets/menu.svg"} alt="" className="size-6" />
+          </button>
         </div>
-        {isOpen && (
-          <motion.div
-            className="block overflow-hidden text-center sm:hidden bg-primary"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <nav className="py-5">
-              <Navigation setCategory={setCategory} isMobile={true} activeSection={activeSection} />
-            </nav>
-          </motion.div>
-        )}
-      </div>
-
-      {/* Scroll to Top Button */}
-      <AnimatePresence>
-        {showScrollTop && (
-          <motion.button
-            onClick={scrollToTop}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-8 right-8 z-50 flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-md shadow-2xl transition-all duration-500 group"
-          >
-            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/60 group-hover:text-white transition-colors">
-              Back to Top
-            </span>
-            <div className="w-px h-4 bg-white/20 group-hover:bg-white/40 transition-colors" />
-            <img
-              src="/assets/arrow-up.svg"
-              alt="Scroll to top"
-              className="w-3 h-3 brightness-0 invert group-hover:-translate-y-1 transition-all duration-500"
-            />
-          </motion.button>
-        )}
-      </AnimatePresence>
+        <AnimatePresence>
+          {isOpen && (
+            <motion.nav id="mobile-navigation" aria-label="Mobile navigation" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden border-t border-white/5 bg-primary xl:hidden">
+              <div className="c-space max-h-[calc(100dvh-4rem)] overflow-y-auto pb-6 pt-3">
+                <ul className="space-y-1">{navLinks}</ul>
+                <div className="mt-4 flex flex-wrap gap-5 border-t border-white/10 pt-4">
+                  {documents.map((doc) => <a key={doc.label} href={doc.href} target="_blank" rel="noreferrer" onClick={() => setIsOpen(false)} className="rounded-sm py-2 text-lg md:text-base font-bold text-sand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-aqua">{doc.label}<span className="sr-only"> (opens in a new tab)</span></a>)}
+                </div>
+              </div>
+            </motion.nav>
+          )}
+        </AnimatePresence>
+      </header>
+      {showScrollTop && (
+        <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Back to top" className="fixed bottom-5 right-5 z-30 flex cursor-pointer items-center gap-3 rounded-full border border-white/10 bg-primary/80 p-3 shadow-lg backdrop-blur-md transition hover:bg-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-aqua sm:px-5">
+          <span className="hidden text-xs text-neutral-300 sm:inline">Back to Top</span><img src="/assets/arrow-up.svg" alt="" className="size-4" />
+        </button>
+      )}
     </>
   );
-};
-
-export default Navbar;
+}

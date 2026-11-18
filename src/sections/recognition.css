@@ -1,0 +1,56 @@
+.recognition-section {
+  margin-top: clamp(5rem, 10vw, 8rem);
+}
+
+.recognition-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.achievement-feature {
+  background: radial-gradient(ellipse at 0% 0%, #d6995c16, transparent 65%), linear-gradient(145deg, #161a31, #06091f);
+}
+
+.achievement-secondary {
+  background: linear-gradient(145deg, #161a3199, #06091f);
+}
+
+.recognition-focus:focus-visible {
+  outline: 2px solid #33c2cc;
+  outline-offset: 5px;
+}
+
+.recognition-section button,
+.achievement-dialog button {
+  cursor: pointer;
+}
+
+.achievement-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(60rem, calc(100% - 2rem));
+  max-width: none;
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  overflow-y: auto;
+  border: 0;
+  border-radius: 1rem;
+  background: transparent;
+}
+
+.achievement-dialog::backdrop {
+  background: #030412da;
+  backdrop-filter: blur(8px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recognition-section *,
+  .achievement-dialog * {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}

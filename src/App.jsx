@@ -1,33 +1,42 @@
 import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Analytics } from "@vercel/analytics/react";
 
 import Navbar from "./sections/Navbar";
 import Hero from "./sections/Hero";
+import CurrentWork from "./sections/CurrentWork";
 import About from "./sections/About";
 import Projects from "./sections/Projects";
 import Experiences from "./sections/Experiences";
+import Achievements from "./sections/Achievements";
+import Certifications from "./sections/Certifications";
 import CategoryToggle from "./components/CategoryToggle";
-import Testimonial from "./sections/Testimonial";
 import Contact from "./sections/Contact";
 import Footer from "./sections/Footer";
 import NotFound from "./sections/NotFound";
 import SEO from "./components/SEO";
+import { myProjects } from "./constants";
+import { findProjectBySlug } from "./utils/projectNavigation";
 
 const Home = () => {
-  const [category, setCategory] = useState("technical");
+  const [searchParams] = useSearchParams();
+  const linkedProject = findProjectBySlug(myProjects, searchParams.get("project"));
+  const [chosenCategory, setCategory] = useState(() => linkedProject?.category || "technical");
+  const category = linkedProject?.category || chosenCategory;
 
   return (
     <div className="container mx-auto max-w-7xl">
       <SEO />
-      <Navbar setCategory={setCategory} />
+      <Navbar />
       <Hero />
+      <CurrentWork />
       <About />
       <CategoryToggle category={category} setCategory={setCategory} />
-      <Projects category={category} />
-      <Experiences category={category} />
-      <Testimonial />
+      <Projects key={category} category={category} />
+      <Experiences />
+      <Achievements />
+      <Certifications />
       <Contact />
       <Footer />
     </div>
@@ -38,10 +47,10 @@ const App = () => {
   return (
     <>
       <Helmet>
-        <title>Al-Firdaus | Data Scientist & Video Editor</title>
+        <title>Al-Firdaus | Data Science & AI Researcher | Creative Professional</title>
         <meta
           name="description"
-          content="Portfolio of Al-Firdaus Nuzula. Bridging data insights with creative storytelling through Data Science and Professional Video Editing."
+          content="Data science research, predictive analytics, data engineering, and creative production by Al-Firdaus Nuzula. Explore projects, experience, and BRINATHON 2026 documentation."
         />
         <meta name="keywords" content="Data Scientist, Video Editor, Portfolio, React, Python, Creative" />
       </Helmet>

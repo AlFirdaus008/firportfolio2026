@@ -1,0 +1,62 @@
+.experience-action {
+  display: inline-flex;
+  max-width: 100%;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid rgb(255 255 255 / 15%);
+  border-radius: 0.5rem;
+  background: rgb(255 255 255 / 3%);
+  padding: 0.65rem 1rem;
+  color: #d4d4d4;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.experience-action:hover {
+  border-color: rgb(255 255 255 / 30%);
+  background: rgb(255 255 255 / 7%);
+  color: #fff;
+}
+
+.experience-action:focus-visible {
+  outline: 2px solid #d4d4d4;
+  outline-offset: 4px;
+}
+
+.experience-disclosure > summary {
+  list-style: none;
+}
+
+.experience-disclosure > summary::marker {
+  content: "";
+}
+
+.experience-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.experience-disclosure-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  transition: transform 150ms ease;
+}
+
+.experience-disclosure[open] > summary .experience-disclosure-icon {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-action,
+  .experience-disclosure-icon {
+    transition: none;
+  }
+}

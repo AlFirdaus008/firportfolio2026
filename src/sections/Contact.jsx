@@ -80,9 +80,8 @@ const Contact = () => {
         <div className="flex flex-col items-start w-full gap-5 mb-10">
           <h2 className="text-heading">Let's Talk</h2>
           <p className="font-normal text-neutral-400">
-            {/* Perbaikan typo: loking -> looking */}
-            Whether you're looking to build a new website, improve your existing
-            platform, or bring a unique project to life, I'm here to help.
+            For research collaboration, data projects, or video production,
+            contact me through the links below or send a message.
           </p>
         </div>
 
